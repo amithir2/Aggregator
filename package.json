@@ -1,0 +1,24 @@
+{
+  "name": "sieb-squad-aggregator",
+  "version": "0.0.0",
+  "description": "Aggregator is so cool",
+  "main": "web.js",
+  "dependencies": {
+    "express": "~4.0.0",
+    "handlebars": "~2.0.0-alpha.2",
+    "logfmt": "~1.1.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node web.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@heroku.com:sieb-squad-aggregator.git"
+  },
+  "author": "",
+  "license": "BSD",
+  "readmeFilename": "README.md",
+  "gitHead": "03e362d19dea9f9da78b9580e2fcb487f96f84fc"
+}
