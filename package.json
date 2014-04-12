@@ -1,25 +1,24 @@
 {
-  "name": "Aggregator",
+  "name": "sieb-squad-aggregator",
   "version": "0.0.0",
-  "description": "This aggregator is so cool",
-  "main": "server.js",
+  "description": "Aggregator is so cool",
+  "main": "web.js",
   "dependencies": {
     "express": "~4.0.0",
-    "handlebars": "~2.0.0-alpha.2"
+    "handlebars": "~2.0.0-alpha.2",
+    "logfmt": "~1.1.2"
   },
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "node web.js"
   },
-  "engines": { "node": "0.10.x"},
-
   "repository": {
     "type": "git",
-    "url": "https://github.com/amithir2/Aggregator.git"
+    "url": "git@heroku.com:sieb-squad-aggregator.git"
   },
   "author": "",
   "license": "BSD",
   "readmeFilename": "README.md",
-  "gitHead": "e2fe9634365998e5238d0803171851f29da6f633"
+  "gitHead": "03e362d19dea9f9da78b9580e2fcb487f96f84fc"
 }
