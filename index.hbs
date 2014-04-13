@@ -1,13 +1,16 @@
 <!DOCTYPE html>
-<html>
+<html style="height:100%">
 	<head>
 		<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 		<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 		<title>Sieb Squad</title>
 	</head>
-	<body>
-		<h1>Social Media Aggregator</h1>
-		<div id="fb-root"></div>
+	<body style="font-family:'Calibri'; text-align: center; height:100%">
+		<div class="vertical-align-middle">
+		<h1 style="color:#FF0066; font-size:80px;">Social Media Aggregator</h1>
+		<button id="fb_Login" style="background:#66CCFF; color:#FFFFFF; border-radius:10px; font-family:'Calibri'; font-size:40px;"><strong>Login</strong></button>
+		</div>
+		<div id="fb-root"></div><br><br>
 		<script>
 		window.fbAsyncInit = function() {
 			FB.init({
@@ -23,42 +26,23 @@
 			  js.src = "//connect.facebook.net/en_US/all.js";
 			  fjs.parentNode.insertBefore(js, fjs);
 			}(document, 'script', 'facebook-jssdk'));
+		$(function(){
+			$(window).on("resize", function(){
+				$('.vertical-align-middle').each(function(){
+					$(this).css({"margin-top": ($(this).parent().height() - $(this).height())/2});
+				});
+			});
+			$(window).resize();
+		})
 		</script>
-		<button id="fb_Login" style="background:#003399; color:#FFFFFF; width: 20em;  height: 3em; border-radius:10px;">Get Facebook Newsfeed</button>
+		
+		<br>
+		<br>
 		<div id="newsfeed">
-			
 		</div>
 		<script>
 			$(document).on("click", "#fb_Login", function(){
-				FB.login(function(response) {
-				var str = "";
-				if (response.authResponse) {
-				// The person logged into your app
-					FB.api('/me/home', function(response) {
-						console.log(response);
-						var dataArr = response.data;
-						for(var i=0; i<dataArr.length; i++){
-							var data = dataArr[i];
-							if(data.type == "link"){
-								str += "<h3>" + data.from.name + "</h3><br><p>" + data.story + "</p><br><br>";
-							}
-							else if(data.type == "photo"){
-								str += "<h3>" + data.from.name + "</h3><br>" + "<img src=" + data.picture + "><br><br>";
-							}
-							else if(data.type == "status"){
-								if("story" in data)
-									str += "<h3>" + data.from.name + "</h3><br><p>" + data.story + "</p><br><br>";
-								else
-									str += "<h3>" + data.from.name + "</h3><br><p>" + data.message + "</p><br><br>";
-							}
-						}
-						document.getElementById("newsfeed").innerHTML = str;
-					});
-				}
-				else {
-				// The person cancelled the login dialog
-				}
-			}, {scope: 'basic_info,read_stream'});
+				window.location = '/my_newsfeed';
 			});
 		</script>
 

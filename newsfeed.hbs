@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+		<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+		<title>Sieb Squad</title>
+	</head>
+	<body style="background:#99FFFF; margin-left:50px; font-family:'Calibri'">
+		<h1 style="color:#FF0066; font-size:60px;">Social Media Aggregator</h1>
+		<br><br>
+		<div id="newsfeed">
+		</div>
+		<div id="fb-root"></div><br><br>
+		<script>
+		window.fbAsyncInit = function() {
+			FB.init({
+			  appId      : 1416521955277155,
+			  status     : true,
+			  xfbml      : true
+			});
+
+			FB.getLoginStatus(function(response) {
+				var uid;
+				var accessToken;
+				if (response.status === 'connected') {
+				// the user is logged in and has authenticated your
+				// app, and response.authResponse supplies
+				// the user's ID, a valid access token, a signed
+				// request, and the time the access token 
+				// and signed request each expire
+				uid = response.authResponse.userID;
+				accessToken = response.authResponse.accessToken;
+				displayNewsfeed();
+
+			} else if (response.status === 'not_authorized') {
+				// the user is logged in to Facebook, 
+				// but has not authenticated your app
+				
+			} else {
+				// the user isn't logged in to Facebook.
+				document.getElementById("newsfeed").innerHTML = "<button id='fb_Login' style='background:#003399; color:#FFFFFF; width: 20em;  height: 3em; border-radius:10px; font-family:'Arial''><strong>Login to Facebook</strong></button>";
+			}
+			});
+		};
+		(function(d, s, id) {
+			  var js, fjs = d.getElementsByTagName(s)[0];
+			  if (d.getElementById(id)) return;
+			  js = d.createElement(s); js.id = id;
+			  js.src = "//connect.facebook.net/en_US/all.js";
+			  fjs.parentNode.insertBefore(js, fjs);
+			}(document, 'script', 'facebook-jssdk'));
+		</script>
+		<br>
+		<script>
+		function displayNewsfeed(){
+			var str = "";
+
+			FB.api('/me/home', function(response) {
+				console.log("reached");
+				var dataArr = response.data;
+				console.dir(response);
+
+				for(var i=0; i<dataArr.length; i++){
+					var data = dataArr[i];
+
+					if(data.type.toString() == "photo"){
+						str += "<div style='padding-left:15px; padding-top:15px; padding-bottom:15px; padding-right:15px; border:1px solid #a1a1a1; width:500px; background:#FFFFFF'><h3 style='color:#003399'>" + data.from.name + "</h3><br>" + "<img src=" + data.picture + "></div><br><br>";
+					}
+					else if(data.type.toString() == "status" || data.type.toString() == "link"){
+						if("story" in data)
+							str += "<div style='padding-left:15px; padding-top:15px; padding-bottom:15px; padding-right:15px; border:1px solid #a1a1a1; width:500px; background:#FFFFFF'><h3 style='color:#003399'>" + data.from.name + "</h3><br><p>" + data.story + "</p></div><br><br>";
+						else
+							str += "<div style='padding-left:15px; padding-top:15px; padding-bottom:15px; padding-right:15px; border:1px solid #a1a1a1; width:500px; background:#FFFFFF'><h3 style='color:#003399'>" + data.from.name + "</h3><br><p>" + data.message + "</p></div><br><br>";
+					}
+				}
+				document.getElementById("newsfeed").innerHTML = str;
+			});
+		}
+		</script>
+		<script>
+			$(document).on("click", "#fb_Login", function(){
+				FB.login(function(response) {
+				if (response.authResponse) {
+				// The person logged into your app
+					displayNewsfeed();
+				}
+				else {
+				// The person cancelled the login dialog
+				}
+				}, {scope: 'basic_info,read_stream'});
+			});
+		</script>
+
+	</body>
+</html>
