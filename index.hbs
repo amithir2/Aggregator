@@ -31,6 +31,7 @@
 		<script>
 			$(document).on("click", "#fb_Login", function(){
 				FB.login(function(response) {
+				var str = "";
 				if (response.authResponse) {
 				// The person logged into your app
 					FB.api('/me/home', function(response) {
@@ -39,18 +40,19 @@
 						for(var i=0; i<dataArr.length; i++){
 							var data = dataArr[i];
 							if(data.type == "link"){
-								document.getElementById("newsfeed").innerHTML += "<h3>" + data.from.name + "</h3><br><p>" + data.story + "</p><br><br>";
+								str += "<h3>" + data.from.name + "</h3><br><p>" + data.story + "</p><br><br>";
 							}
 							else if(data.type == "photo"){
-								document.getElementById("newsfeed").innerHTML += "<h3>" + data.from.name + "</h3><br>" + "<img src=" + data.picture + "><br><br>";
+								str += "<h3>" + data.from.name + "</h3><br>" + "<img src=" + data.picture + "><br><br>";
 							}
 							else if(data.type == "status"){
 								if("story" in data)
-									document.getElementById("newsfeed").innerHTML += "<h3>" + data.from.name + "</h3><br><p>" + data.story + "</p><br><br>";
+									str += "<h3>" + data.from.name + "</h3><br><p>" + data.story + "</p><br><br>";
 								else
-									document.getElementById("newsfeed").innerHTML += "<h3>" + data.from.name + "</h3><br><p>" + data.message + "</p><br><br>";
+									str += "<h3>" + data.from.name + "</h3><br><p>" + data.message + "</p><br><br>";
 							}
 						}
+						document.getElementById("newsfeed").innerHTML = str;
 					});
 				}
 				else {
