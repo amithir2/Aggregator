@@ -23,23 +23,20 @@
 				var uid;
 				var accessToken;
 				if (response.status === 'connected') {
-				// the user is logged in and has authenticated your
-				// app, and response.authResponse supplies
-				// the user's ID, a valid access token, a signed
-				// request, and the time the access token 
-				// and signed request each expire
-				uid = response.authResponse.userID;
-				accessToken = response.authResponse.accessToken;
-				twitterRequest();
-
-			} else if (response.status === 'not_authorized') {
-				// the user is logged in to Facebook, 
-				// but has not authenticated your app
-				twitterRequest();
-			} else {
-				// the user isn't logged in to Facebook.
-				document.getElementById("newsfeed").innerHTML = "<button id='fb_Login' style='background:#003399; color:#FFFFFF; width: 20em;  height: 3em; border-radius:10px; font-family:'Arial''><strong>Login to Facebook</strong></button>";
-			}
+					// the user is logged in and has authenticated your
+					// app, and response.authResponse supplies
+					// the user's ID, a valid access token, a signed
+					// request, and the time the access token 
+					// and signed request each expire
+					uid = response.authResponse.userID;
+					accessToken = response.authResponse.accessToken;
+					displayNewsFeed();
+				} else if (response.status === 'not_authorized') {
+					// the user is logged in to Facebook, 
+					// but has not authenticated your app
+				} else {
+					// the user isn't logged in to Facebook.
+				}
 			});
 		};
 		(function(d, s, id) {
@@ -76,33 +73,6 @@
 				document.getElementById("newsfeed").innerHTML = str;
 			});
 		}
-		</script>
-		<script>
-			$(document).on("click", "#fb_Login", function(){
-				FB.login(function(response) {
-				if (response.authResponse) {
-				// The person logged into your app
-					twitterRequest();
-					displayNewsfeed();
-				}
-				else {
-				// The person cancelled the login dialog
-				}
-				}, {scope: 'basic_info,read_stream'});
-			});
-		</script>
-		<script>
-			function twitterRequest(){
-				document.getElementById("newsfeed").innerHTML = "<h3>Would you like to sign in to Twitter?</h3><button id='twitter_Login' style='background:#003399; color:#FFFFFF; width: 20em;  height: 3em; border-radius:10px; font-family:'Arial''><strong>Sign In</strong></button><button id='no_twitter_Login' style='background:#003399; color:#FFFFFF; width: 20em;  height: 3em; border-radius:10px; font-family:'Arial''><strong>No Thanks</strong></button>";
-			}
-			$(document).on("click", "#twitter_Login", function(){
-				window.location = '/auth/twitter';
-				displayNewsfeed();
-			});
-			$(document).on("click", "#no_twitter_Login", function(){
-				displayNewsfeed();
-			});
-
 		</script>
 
 	</body>

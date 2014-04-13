@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+		<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+		<title>Sieb Squad</title>
+	</head>
+	<body style="background:#99FFFF; margin-left:50px; font-family:'Calibri'">
+		<h1 style="color:#FF0066; font-size:60px;">Social Media Aggregator</h1>
+		<br><br>
+		<div id="login">
+		</div>
+		<div id="fb-root"></div><br><br>
+		<script>
+		window.fbAsyncInit = function() {
+			FB.init({
+			  appId      : 1416521955277155,
+			  status     : true,
+			  xfbml      : true
+			});
+
+			FB.getLoginStatus(function(response) {
+				var uid;
+				var accessToken;
+				if (response.status === 'connected') {
+				// the user is logged in and has authenticated your
+				// app, and response.authResponse supplies
+				// the user's ID, a valid access token, a signed
+				// request, and the time the access token 
+				// and signed request each expire
+				uid = response.authResponse.userID;
+				accessToken = response.authResponse.accessToken;
+				document.getElementById("login").innerHTML = "<h3>You are already signed in to Facebook</h3>";
+				twitterRequest1();
+
+			} else if (response.status === 'not_authorized') {
+				// the user is logged in to Facebook, 
+				// but has not authenticated your app
+				twitterRequest2();
+			} else {
+				// the user isn't logged in to Facebook.
+				document.getElementById("login").innerHTML = "<button id='fb_Login' style='background:#66CCFF; color:#FFFFFF; width: 20em;  height: 3em; border-radius:10px; font-family:'Arial''><strong>Login to Facebook</strong></button>";
+			}
+			});
+		};
+		(function(d, s, id) {
+			  var js, fjs = d.getElementsByTagName(s)[0];
+			  if (d.getElementById(id)) return;
+			  js = d.createElement(s); js.id = id;
+			  js.src = "//connect.facebook.net/en_US/all.js";
+			  fjs.parentNode.insertBefore(js, fjs);
+			}(document, 'script', 'facebook-jssdk'));
+		</script>
+		<br>
+		
+		<script>
+			$(document).on("click", "#fb_Login", function(){
+				FB.login(function(response) {
+					twitterRequest2();
+				}, {scope: 'basic_info,read_stream'});
+			});
+		</script>
+		<script>
+			function twitterRequest1(){
+				document.getElementById("login").innerHTML += "<h3>Would you like to sign in to Twitter?</h3><button id='twitter_Login' style='background:#66CCFF; color:#FFFFFF; width: 20em;  height: 3em; border-radius:10px; font-family:'Arial''><strong>Sign In</strong></button><button id='no_twitter_Login' style='background:#66CCFF; color:#FFFFFF; width: 20em;  height: 3em; border-radius:10px; font-family:'Arial''><strong>No Thanks</strong></button>";
+			}
+			function twitterRequest2(){
+				document.getElementById("login").innerHTML += "<h3>Would you like to sign in to Twitter?</h3><button id='twitter_Login' style='background:#66CCFF; color:#FFFFFF; width: 20em;  height: 3em; border-radius:10px; font-family:'Arial''><strong>Sign In</strong></button><button id='no_twitter_Login' style='background:#66CCFF; color:#FFFFFF; width: 20em;  height: 3em; border-radius:10px; font-family:'Arial''><strong>No Thanks</strong></button>";
+			}
+			$(document).on("click", "#twitter_Login", function(){
+				window.location = '/auth/twitter';
+			});
+			$(document).on("click", "#no_twitter_Login", function(){
+				wind.location = '/newsfeed';
+			});
+
+		</script>
+
+	</body>
+</html>
