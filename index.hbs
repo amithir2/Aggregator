@@ -8,7 +8,7 @@
 	<body style="font-family:'Calibri'; text-align: center; height:100%">
 		<div class="vertical-align-middle">
 		<h1 style="color:#FF0066; font-size:80px;">Social Media Aggregator</h1>
-		<button id="fb_Login" style="background:#66CCFF; color:#FFFFFF; border-radius:10px; font-family:'Calibri'; font-size:40px;"><strong>Login</strong></button>
+		<button id="login" style="background:#66CCFF; color:#FFFFFF; border-radius:10px; font-family:'Calibri'; font-size:40px;"><strong>Login</strong></button>
 		</div>
 		<div id="fb-root"></div><br><br>
 		<script>
@@ -41,8 +41,8 @@
 		<div id="newsfeed">
 		</div>
 		<script>
-			$(document).on("click", "#fb_Login", function(){
-				window.location = '/my_newsfeed';
+			$(document).on("click", "#login", function(){
+				window.location = '/login';
 			});
 		</script>
 

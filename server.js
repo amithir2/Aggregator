@@ -14,7 +14,11 @@ app.get('/', function(req, res){
 });
 
 app.get('/login', function(req,res){
-
+	fs.readFile('./login.hbs', function(err, data){
+		if(err) throw err;
+		var template = hbs.compile(data.toString());
+		res.send(template());
+	});
 });
 
 app.get('/my_newsfeed', function(req, res){
